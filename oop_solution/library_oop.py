@@ -25,12 +25,39 @@ class Book:
         return False
 
 class Member:
-    def __init__(self,id,name,email,borrowed_books):
+    def __init__(self,id,name,email):
         self.id = id
         self.name = name
         self.email = email
-        self.borrowed_books = borrowed_books
+        self.borrowed_books = []
 
+    def allow_borrowing(self):
+        """Member's eligibility to borrow a book."""
+        if self.amount() >= 3:
+            return False
+        return True
+    
+    def book_in(self,id):
+        """Check if book already borrowed by member."""
+        return id in self.borrowed_books
+    
+    def amount(self):
+        """Checking the amount of borrowed books."""
+        return len(self.borrowed_books)
+    
+    def add_borrowed(self,book_id):
+        """Attempt to add book id into user's borrowed list"""
+        if not(self.book_in(book_id)) and self.allow_borrowing():
+            self.borrowed_books.append(book_id)
+            return True
+        return False
+    
+    def remove_borrowed(self,book_id):
+        """Attempt to remove book id from user's borrowed list"""
+        if self.amount() > 0 and self.book_in(book_id):
+            self.borrowed_books.remove(book_id)
+            return True
+        return False
 
 class Library:
     def __init__(self):
@@ -46,7 +73,7 @@ class Library:
 
     def add_member(self, member_id, name, email):
         """Register a new library member"""
-        member = Member(member_id,name,email,[])
+        member = Member(member_id,name,email)
         self.members.append(member)
         print(f"Member '{name}' registered successfully!")
 
@@ -81,13 +108,13 @@ class Library:
             print("Error: No copies available!")
             return False
         
-        if len(member.borrowed_books) >= 3:
+        if member.allow_borrowing() == False:
             print("Error: Member has reached borrowing limit!")
             return False
         
         # Process the borrowing
         book.borrow()
-        member.borrowed_books.append(book_id)
+        member.add_borrowed(book_id)
         
         transaction = {
             'member_id': member_id,
@@ -109,13 +136,13 @@ class Library:
             print("Error: Member or book not found!")
             return False
         
-        if book_id not in member.borrowed_books:
+        if not member.book_in(book_id):
             print("Error: This member hasn't borrowed this book!")
             return False
         
         # Process the return
         book.return_book()
-        member.borrowed_books.remove(book_id)
+        member.remove_borrowed(book_id)
         
         # Remove from borrowed_books list
         for i, transaction in enumerate(self.borrowed_books):
