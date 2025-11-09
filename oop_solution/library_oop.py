@@ -1,3 +1,11 @@
+class Book:
+    def __init__(self,id,title,author,available_copies):
+        self.id = id
+        self.title = title
+        self.author = author
+        self.available_copies = available_copies
+        self.total_copies = available_copies
+
 class Library:
     def __init__(self):
         self.books = []
@@ -6,13 +14,7 @@ class Library:
 
     def add_book(self,book_id, title, author, available_copies):
         """Add a new book to the library"""
-        book = {
-            'id': book_id,
-            'title': title,
-            'author': author,
-            'available_copies': available_copies,
-            'total_copies': available_copies
-        }
+        book = Book(book_id,title,author,available_copies)
         self.books.append(book)
         print(f"Book '{title}' added successfully!")
 
@@ -30,7 +32,7 @@ class Library:
     def find_book(self,book_id):
         """Find a book by ID"""
         for book in self.books:
-            if book['id'] == book_id:
+            if book.id == book_id:
                 return book
         return None
 
@@ -54,7 +56,7 @@ class Library:
             print("Error: Book not found!")
             return False
         
-        if book['available_copies'] <= 0:
+        if book.available_copies <= 0:
             print("Error: No copies available!")
             return False
         
@@ -63,18 +65,18 @@ class Library:
             return False
         
         # Process the borrowing
-        book['available_copies'] -= 1
+        book.available_copies -= 1
         member['borrowed_books'].append(book_id)
         
         transaction = {
             'member_id': member_id,
             'book_id': book_id,
             'member_name': member['name'],
-            'book_title': book['title']
+            'book_title': book.title
         }
         self.borrowed_books.append(transaction)
         
-        print(f"{member['name']} borrowed '{book['title']}'")
+        print(f"{member['name']} borrowed '{book.title}'")
         return True
 
     def return_book(self,member_id, book_id):
@@ -91,7 +93,7 @@ class Library:
             return False
         
         # Process the return
-        book['available_copies'] += 1
+        book.available_copies += 1
         member['borrowed_books'].remove(book_id)
         
         # Remove from borrowed_books list
@@ -100,15 +102,15 @@ class Library:
                 self.borrowed_books.pop(i)
                 break
         
-        print(f"{member['name']} returned '{book['title']}'")
+        print(f"{member['name']} returned '{book.title}'")
         return True
 
     def display_available_books(self):
         """Display all books with available copies"""
         print("\n=== Available Books ===")
         for book in self.books:
-            if book['available_copies'] > 0:
-                print(f"{book['title']} by {book['author']} - {book['available_copies']} copies available")
+            if book.available_copies > 0:
+                print(f"{book.title} by {book.author} - {book.available_copies} copies available")
 
     def display_member_books(self,member_id):
         """Display books borrowed by a specific member"""
@@ -124,4 +126,4 @@ class Library:
             for book_id in member['borrowed_books']:
                 book = self.find_book(book_id)
                 if book:
-                    print(f"- {book['title']} by {book['author']}")
+                    print(f"- {book.title} by {book.author}")

@@ -93,7 +93,7 @@ def test_library_system():
         if member['borrowed_books']:
             for book_id in member['borrowed_books']:
                 book = lib.find_book(book_id)
-                print(f"  - {book['title']}")
+                print(f"  - {book.title}")
         else:
             print("  (No books borrowed)")
     
