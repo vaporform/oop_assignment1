@@ -131,10 +131,42 @@ def test_book_class():
     for i in range(0,6):
         print(j.return_book(), j.available_copies)
 
+def test_member_class():
+    print("=" * 60)
+    print("MEMBER CLASS - COMPREHENSIVE TEST")
+    print("=" * 60)
+
+    # Test 1: Creating a new member.
+    print("\n--- TEST 1: Creating a member ---")
+    a = Member(1,"John Doe","example@mail.com")
+
+    # Test 2: Borrowing a book.
+    print("\n--- TEST 2: Borrowing a book ---")
+    print(a.add_borrowed(1))
+
+    # Test 3: Returning a book.
+    print("\n--- TEST 3: Returning a book ---")
+    print(a.remove_borrowed(1))
+    
+    # Test 4: Borrowing more books than allowed.
+    print("\n--- TEST 4: Borrowing more books than total ---")
+    for i in range(0,6):
+        print(a.add_borrowed(i))
+    
+    # Test 5: Returning more books than allowed.
+    print("\n--- TEST 5: Returning more books than total ---")
+    for i in range(0,4):
+        print(a.remove_borrowed(i))
+
+    # Test 6: Returning a book that does not exist
+    print("\n--- TEST 6: Returning nonexistent book ---")
+    print(a.remove_borrowed(123))
+
 # Run the comprehensive test
 if __name__ == "__main__":
-    test_library_system()
-    print()
     test_book_class()
     print()
+    test_member_class()
+    print()
+    test_library_system()
     
