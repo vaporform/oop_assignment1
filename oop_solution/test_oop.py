@@ -1,4 +1,4 @@
-from library_oop import Library
+from library_oop import Library,Book,Member
 lib = Library()
 
 # Test Code for Object Orientated Programming style Library System
@@ -103,6 +103,36 @@ def test_library_system():
     print("TEST COMPLETE")
     print("=" * 60)
 
+def test_book_class():
+    print("=" * 60)
+    print("BOOK CLASS - COMPREHENSIVE TEST")
+    print("=" * 60)
+
+    # Test 1: Initialize a book.
+    print("\n--- TEST 1: Creating a book ---")
+    j = Book(1,"A Brief History of Time","Stephen Hawking",3)
+    print(j)
+
+    # Test 2: Borrowing a book.
+    print("\n--- TEST 2: Borrowing a book ---")
+    print(j.borrow(), j.available_copies)
+
+    # Test 3: Returning a book.
+    print("\n--- TEST 3: Returning a book ---")
+    print(j.return_book(), j.available_copies)
+    
+    # Test 4: Borrowing more books than allowed.
+    print("\n--- TEST 4: Borrowing more books than total ---")
+    for i in range(0,6):
+        print(j.borrow(), j.available_copies)
+    
+    # Test 5: Returning more books than allowed.
+    print("\n--- TEST 5: Returning more books than total ---")
+    for i in range(0,6):
+        print(j.return_book(), j.available_copies)
+
 # Run the comprehensive test
 if __name__ == "__main__":
     test_library_system()
+    print()
+    test_book_class()

@@ -6,12 +6,31 @@ class Book:
         self.available_copies = available_copies
         self.total_copies = available_copies
 
+    def available_borrow(self):
+        """Check if copies are available for borrowing"""
+        return self.available_copies > 0
+    
+    def borrow(self):
+        """Borrow a book."""
+        if self.available_borrow():
+            self.available_copies -= 1
+            return True
+        return False
+
+    def return_book(self):
+        """Return a book."""
+        if self.total_copies > self.available_copies:
+            self.available_copies += 1
+            return True
+        return False
+
 class Member:
     def __init__(self,id,name,email,borrowed_books):
         self.id = id
         self.name = name
         self.email = email
         self.borrowed_books = borrowed_books
+
 
 class Library:
     def __init__(self):
@@ -58,7 +77,7 @@ class Library:
             print("Error: Book not found!")
             return False
         
-        if book.available_copies <= 0:
+        if book.available_borrow() == False:
             print("Error: No copies available!")
             return False
         
@@ -67,7 +86,7 @@ class Library:
             return False
         
         # Process the borrowing
-        book.available_copies -= 1
+        book.borrow()
         member.borrowed_books.append(book_id)
         
         transaction = {
@@ -95,7 +114,7 @@ class Library:
             return False
         
         # Process the return
-        book.available_copies += 1
+        book.return_book()
         member.borrowed_books.remove(book_id)
         
         # Remove from borrowed_books list
@@ -111,7 +130,7 @@ class Library:
         """Display all books with available copies"""
         print("\n=== Available Books ===")
         for book in self.books:
-            if book.available_copies > 0:
+            if book.available_borrow():
                 print(f"{book.title} by {book.author} - {book.available_copies} copies available")
 
     def display_member_books(self,member_id):
