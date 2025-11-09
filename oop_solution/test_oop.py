@@ -1,7 +1,7 @@
 from library_oop import Library
 lib = Library()
 
-# Test Code for Procedural Library System
+# Test Code for Object Orientated Programming style Library System
 def test_library_system():
     """Comprehensive test of all library functions"""
     
