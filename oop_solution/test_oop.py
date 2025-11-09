@@ -162,11 +162,76 @@ def test_member_class():
     print("\n--- TEST 6: Returning nonexistent book ---")
     print(a.remove_borrowed(123))
 
+def test_library_class():
+
+    print("=" * 60)
+    print("LIBRARY CLASS - COMPREHENSIVE TEST")
+    print("=" * 60)
+    lib = Library()
+    
+    # Test 1: Add Books
+    print("\n--- TEST 1: Adding Books ---")
+    lib.add_book(1,"JoJo's Bizarre Adventure: Phantom Blood","Hirohiko Araki",1)
+    lib.add_book(2,"JoJo's Bizarre Adventure: Battle Tendency","Hirohiko Araki",2)
+    lib.add_book(3,"JoJo's Bizarre Adventure: Stardust Crusaders","Hirohiko Araki",3)
+    lib.add_book(4,"JoJo's Bizarre Adventure: Diamond is Unbreakable","Hirohiko Araki",4)
+    lib.add_book(5,"JoJo's Bizarre Adventure: Golden Wind","Hirohiko Araki",5)
+    lib.add_book(6,"JoJo's Bizarre Adventure: Stone Ocean","Hirohiko Araki",6)
+    lib.add_book(7,"Steel Ball Run","Hirohiko Araki",7)
+    lib.add_book(8,"JoJolion","Hirohiko Araki",8)
+    lib.add_book(9,"The JOJOLands","Hirohiko Araki",9)
+    
+    # Test 2: Add Members
+    print("\n--- TEST 2: Registering Members ---")
+    lib.add_member(1, "Jonathan Joestar", "JonJoe@email.com")
+    lib.add_member(2, "Joseph Joestar", "JosJoe@email.com")
+    lib.add_member(3, "Jotaro Kujo", "Kujo@email.com")
+    lib.add_member(4, "Josuke Higashikata", "JsH@email.com")
+    lib.add_member(5, "Giorno Giovanna", "GioGio@email.com")
+    lib.add_member(6, "Jolyne Cujoh", "Jolyne@email.com")
+    lib.add_member(7, "Johnny Joestar", "JohnJoe@email.com")
+    lib.add_member(8, "Josukeight Higashikata", "Js8H@email.com")
+    lib.add_member(9, "Jodio Joestar", "JDio@email.com")
+    
+    # Test 3: Display Available Books
+    print("\n--- TEST 3: Display Available Books ---")
+    lib.display_available_books()
+    
+    # Test 4: Successful Book Borrowing
+    print("\n--- TEST 4: Successful Borrowing ---")
+    lib.borrow_book(1, 1)  # Jonathan borrows Phantom Blood
+    lib.borrow_book(1, 2)  # Jonathan borrows Battle Tendency
+    lib.borrow_book(6, 6)  # Jolyne borrows Stone Ocean
+    
+    # Test 5: Display Member's Borrowed Books
+    print("\n--- TEST 5: Display Member's Books ---")
+    lib.display_member_books(1)  # Jonathan's books
+    lib.display_member_books(6)  # Bob's books
+    lib.display_member_books(7)  # Johnny's books (none)
+    
+    # Test 6: Display Available Books After Borrowing
+    print("\n--- TEST 6: Available Books After Borrowing ---")
+    lib.display_available_books()
+    
+    # Test 7: Borrow Last Available Copy
+    print("\n--- TEST 7: Borrowing Last Copy ---")
+    lib.borrow_book(7, 2)  # Johnny borrows the only copy of Battle Tendency
+    lib.display_available_books()
+    
+    # Test 8: Return Books
+    print("\n--- TEST 8: Returning Books ---")
+    lib.return_book(1, 1)  # Jonathan returns Phantom Blood
+    lib.return_book(6, 6)  # Jolyne returns Stone Ocean
+    lib.display_member_books(1)
+    lib.display_available_books()
+
 # Run the comprehensive test
 if __name__ == "__main__":
     test_book_class()
     print()
     test_member_class()
+    print()
+    test_library_class()
     print()
     test_library_system()
     
