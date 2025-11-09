@@ -217,13 +217,23 @@ def test_library_class():
     print("\n--- TEST 7: Borrowing Last Copy ---")
     lib.borrow_book(7, 2)  # Johnny borrows the only copy of Battle Tendency
     lib.display_available_books()
-    
+
+    print("\n--- TEST 7: Borrowing Last Copy ---")
+    lib.borrow_book(7, 2)  # Johnny borrows the only copy of Battle Tendency
+    lib.display_available_books()
     # Test 8: Return Books
     print("\n--- TEST 8: Returning Books ---")
     lib.return_book(1, 1)  # Jonathan returns Phantom Blood
     lib.return_book(6, 6)  # Jolyne returns Stone Ocean
     lib.display_member_books(1)
     lib.display_available_books()
+
+    # Test 9: Nonexistent Member or Book
+    print("\n--- TEST 9: Nonexistent Member or Book ---")
+    lib.borrow_book(999, 1)  # Non-existent member
+    lib.borrow_book(1, 999)  # Non-existent book
+    lib.return_book(999, 1)  # Non-existent member
+    lib.display_member_books(999)  # Non-existent member
 
 # Run the comprehensive test
 if __name__ == "__main__":
